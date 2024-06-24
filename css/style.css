@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+header, footer {
+    background-color: #007FC6;
+    height: 150px;
+    padding: 30px 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+header, body, footer {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;   
+    color: white;
+}
+
+header img, footer img {
+    border-radius: 10px;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+}
+
+header h1 {
+    color: white;
+    border: black;
+    margin-left: 20px;
+}
+
+
+main {
+    /* background-image: url(../imgs/logo_anguil.jpg);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: right; */
+    padding-left: 10%;  /* Cambiar esto si esta muy hacia la derecha las cosas* */
+}
+
+#imagen_fondo {
+    opacity: 0.5;
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    width: 40%;
+    height: auto;
+    z-index: -1;
+}
+
+
+#div_referente {
+    margin: 0;
+    padding-top:20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#referente {
+    background-color: #50C878;
+    border: #50C878;
+    border-radius: 20px;
+    width: 50%;
+    height: 40px; /* Optional: You can adjust the height as needed */
+    padding: 20px 0px; /* Optional: Add some padding inside the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Optional: Center text inside the div */
+    text-decoration-line: underline;
+}
+
+.subrayado {
+    text-decoration-line: underline;
+}
+
+#div_indicarConstruccion {
+    margin-bottom: 0px;
+}
+
+.section_tipoConstruccion {
+    display: flex;
+    align-items: center;
+    border: #007ABE;
+    border-radius: 20px;
+    margin-left: 15px;    
+    width: 80%;
+}
+
+.encuestas_principales {
+    background-color: #007ABE;
+    border: #007ABE;
+    border-radius: 20px;
+    padding: 10px 10px;
+    margin: 15px;
+    width: 40%;
+}
+
+.encuestas_secundarias {
+    background-color: #215f80;
+    border: #007ABE;
+    border-radius: 20px;
+    padding: 10px 10px;
+    margin: 15px;
+    width: 40%;
+}
+
+.encuestas_secundarias_divLv1 {
+    background-color: #215f80;
+    border: #007ABE;
+    border-radius: 20px;
+    flex: 0 0 50%;  /* Do not allow shrinking or growing, fixed at 70% */
+    max-width: 50%;
+    padding: 10px 10px;
+    margin: 15px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+.encuestas_secundarias_divLv2 {
+    background-color: #4cb3eb;
+    border: #007ABE;
+    border-radius: 20px;
+    flex: 0 0 40%;  /* Do not allow shrinking or growing, fixed at 30% */
+    max-width: 40%;
+    margin: 15px 0px;
+}
+
+
+.encuestas_secundarias_divLv2 input[type=text] {
+    border: #27a4e7;
+    background-color: #d0d8dc;
+    border-radius: 20px;
+    text-decoration: none;
+    height: 35px;
+    padding-left: 10%;
+}
+
+
+.choice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.choice label {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.choice label:last-child {
+    margin-bottom: 0;
+}
+
+.encuestas_texto {
+    display: flex;
+    flex-direction: row;
+}
+
+.div_izquierdo, .div_derecho {
+    width: 50%;
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    padding: 10px; /* Add padding for spacing (optional) */
+}
+
+.div_izquierdo {
+    text-align: center;    
+}
+
+.div_derecho {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.encuestas_principales input[type=text], .encuestas_secundarias input[type=text] {
+    border: #27a4e7;
+    background-color: #27a4e7;
+    border-radius: 20px;
+    text-decoration: none;
+    height: 35px;
+    padding-left: 10%;
+}
+
+#section_botones {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20%;
+}
+
+#div_botones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#botonCalculo {
+    background-color: #50C878;
+    border-radius: 20px;
+    height: 50px;
+    width: 225px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#botonImprimir {
+    background-color: #007ABE;
+    border-radius: 20px;
+    height: 40px;
+    width: 250px;
+}
+
+#section_total {
+    width: 400px;
+    height: 125px;
+    margin-top: 10px;
+    margin-bottom: 75px;
+    margin-left: 10%;
+    background-color: #50C878;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    font-weight: 600;
+}
+
+#resultado {
+    width: 250px;
+    height: 40px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    background-color: #b3d4befb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer div {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#link_email {
+    color: pink;
+}
+

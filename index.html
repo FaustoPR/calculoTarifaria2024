@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/calculo.js"></script>
+</head>
+<body>
+    
+    <header>
+        <img src="imgs/logo_anguil.jpg" alt="logo" >
+        <h1>Calculadora: Ordenanza Tarifaria 2024</h1>
+    </header>
+
+    <main>
+        <img id="imagen_fondo" src="imgs/logo_anguil.jpg" alt="logo_anguil">
+
+        <div id="div_referente">
+            <div id="referente"><h3>Referente al capitulo decimo: Derechos de construccion</h3></div>
+        </div>
+        
+        <form action="" method="post">
+            <section>
+                
+                <p class="subrayado">Indicar según corresponda al plano.</p>
+
+                <div class="encuestas_principales choice">
+                    <label for="ampliacion">Ampliacion <input type="checkbox" id="ampliacion" name="CaracteristicaPlano[]" value="ampliacion"></label>
+                    
+                    <label for="conformeObra">Conforme a obra <input type="checkbox" id="conformeObra" name="CaracteristicaPlano[]" value="conformeObra"></label>
+                    
+                    <label for="demolicion">Demolicion <input type="checkbox" id="demolicion" name="CaracteristicaPlano[]" value="demolicion"></label>
+                    
+                    <label for="obraNueva">Obra nueva <input type="checkbox" id="obraNueva" name="CaracteristicaPlano[]" value="obraNueva"></label>
+                </div>
+        
+                <div id="divAmpliacion" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Superficie de ampliacion</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="superficieAmpliacion" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divConformeObra" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Superficie de construccion existente sin declarar</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="superficieConformeObra" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divDemolicion" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Superficie de demolicion</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="superficieDemolicion" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divObraNueva" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Superficie de obra nueva</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="superficieObraNueva" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+        
+                <!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+                <!-- <div class="encuestas choice">
+                    <p class="subrayado">¿Ya fue declarada la superficie?</p>
+                    <label for="superficieDeclaradaSi">Si <input type="radio" id="superficieDeclaradaSi" name="superficieDeclarada" value="si"></label>
+                    
+                    <label for="superficieDeclaradaNo">No <input type="radio" id="superficieDeclaradaNo" name="superficieDeclarada" value="no"></label>
+                </div> -->
+
+                <div id="div_indicarConstruccion" class="encuestas_principales choice">
+                    <p>Indicar tipo de construccion</p>
+
+                    <label for="vivienda">Vivienda <input type="checkbox" id="vivienda" name="tipoConstruccion[]" value="vivienda"></label>
+                    
+                    <label for="comercial">Comercial <input type="checkbox" id="comercial" name="tipoConstruccion[]" value="comercial"></label>
+
+                    <label for="industrial">Industrial <input type="checkbox" id="industrial" name="tipoConstruccion[]" value="industrial"></label>
+
+                    <label for="varias">Varias <input type="checkbox" id="varias" name="tipoConstruccion[]" value="varias"></label>
+
+                    <label for="tanques">Tanques enterrados para fluidos <input type="checkbox" id="tanques" name="tipoConstruccion[]" value="tanques"></label>
+
+                    <label for="toldo">Toldo <input type="checkbox" id="toldo" name="tipoConstruccion[]" value="toldos"></label>
+                </div>
+
+                <section class="section_tipoConstruccion">
+                    <div id="divVivienda" class="encuestas_secundarias_divLv1 choice" style="display: none;">
+                        <p>Tipo de vivienda</p>
+    
+                        <label for="viviendaParticular">Particular <input type="radio" id="viviendaParticular" name="tipoVivienda" value="viviendaParticular"></label>
+                        
+                        <label for="viviendaSocial">Social <input type="radio" id="viviendaSocial" name="tipoVivienda" value="viviendaSocial"></label>
+                    </div>
+                    <div id="divViviendaParticular" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de la vivienda particular</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieViviendaParticular" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div id="divViviendaSocial" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de la vivienda social</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieViviendaSocial" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_tipoConstruccion">
+                    <div id="divUsoComercial" class="encuestas_secundarias_divLv1 choice" style="display: none;">
+                        <p>Tipo de uso comercial</p>
+    
+                        <label for="usoComercialDepositoEtc">Depósitos, estaciones de servicios, garajes públicos, mercados, negocios, oficinas, salones, supermercados. <input type="radio" id="usoComercialDepositoEtc" name="tipoUsoComercial" value="depositoEtc"></label>
+                        
+                        <label for="usoComercialBancosHoteles">Bancos, hoteles <input type="radio" id="usoComercialBancosHoteles" name="tipoUsoComercial" value="bancosHoteles"></label>
+                    </div>
+                    <div id="divUsoComercialDepositoEtc" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de uso comercial</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieDepositoEtc" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div id="divUsoComercialBancosHoteles" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de bancos u hoteles</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieBancosHoteles" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_tipoConstruccion">
+                    <div id="divConstruccionIndustrial" class="encuestas_secundarias_divLv1 choice" style="display: none;">
+                        <p>Tipo de construccion industrial</p>
+    
+                        <label for="construccionIndustrialFabricas">Fabricas <input type="radio" id="construccionIndustrialFabricas" name="tipoIndustrial" value="fabricas"></label>
+                        
+                        <label for="construccionIndustrialGalpones">Galpones <input type="radio" id="construccionIndustrialGalpones" name="tipoIndustrial" value="galpones"></label>
+                    
+                        <label for="construccionIndustrialTinglados">Tinglados <input type="radio" id="construccionIndustrialTinglados" name="tipoIndustrial" value="tinglados"></label>
+                    </div>
+                    <div id="divConstruccionIndustrialFabricas" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de fabricas</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieFabricas" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div id="divConstruccionIndustrialGalpones" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de galpones</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieGalpones" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div id="divConstruccionIndustrialTinglados" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de tinglados</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieTinglados" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section_tipoConstruccion">
+                    <div id="divConstruccionesVarias" class="encuestas_secundarias_divLv1 choice" style="display: none;">
+                        <p>Construcciones varias</p>
+    
+                        <label for="construccionesVariasCineEtc">Cines, sanatorios, teatros <input type="radio" id="construccionesVariasCineEtc" name="tipoConstruccionesVarias" value="cineEtc"></label>
+                        
+                        <label for="construccionesVariasClubesEtc">Clubes, estadios, instalaciones educacionales <input type="radio" id="construccionesVariasClubesEtc" name="tipoConstruccionesVarias" value="clubesEtc"></label>
+                    </div>
+                    <div id="divConstruccionesVariasCineEtc" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de cines, sanatorios y teatros</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieCineEtc" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div id="divConstruccionesVariasClubesEtc" class="encuestas_secundarias_divLv2 encuestas_texto" style="display: none;">
+                        <div class="div_izquierdo">
+                            <p>Superficie de clubes, estadios y instalaciones educacionales</p>
+                        </div>
+                        <div class="div_derecho">
+                            <input type="text" id="superficieClubesEtc" oninput="validateAndToggleButton(this)">
+                            <span id="errorSuperficieM2" style="color: red;"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <div id="divCantTanques" class="encuestas_secundarias encuestas_texto" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de tanques</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="cantTanques" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+                    
+                <div id="divToldo" class="encuestas_secundarias encuestas_texto" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Superficie de toldo</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="superficieToldo" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <!-- //////////////////////////////////////////////////////////////////////////////// -->
+
+                <div class="encuestas_principales encuestas_texto">
+                    <div class="div_izquierdo">
+                        <p>Superficie cubierta y/o semicubierta fuera de linea municipal</p>
+                    </div>
+                    <div class="div_derecho">
+                        <input type="text" id="superficieCubierta" oninput="validateAndToggleButton(this)">
+                        <span id="errorSuperficieCubierta" style="color: red;"></span>
+                    </div>                    
+                </div>
+        
+                <!-- <div class="encuestas choice">
+                    <p class="subrayado">¿Alteracion de superficie cubierta?</p>
+                    <label for="alteracionSuperficieSi">Si <input type="radio" id="alteracionSuperficieSi" name="alteracionSuperficie" value="si"></label>
+                    
+                    <label for="alteracionSuperficieNo">No <input type="radio" id="alteracionSuperficieNo" name="alteracionSuperficie" value="no"></label>
+                </div> -->
+                
+                <section id="section_botones">
+                    <div id="div_botones">
+                        <button type="button" id="botonCalculo" >Calcular</button>
+                        <button id="botonImprimir">Calcular e Imprimir</button>
+                    </div>
+                </section>
+
+                <section id="section_total">
+                    <p>TOTAL</p>
+                    <div id="resultado"></div>
+                </section>
+            </section>
+        </form>
+    </main>
+
+
+    <footer>
+        <img src="imgs/logo_anguil.jpg" alt="logo">
+        <div>
+            <p>Informacion y Contacto</p>
+            <p>Intendenta: Fernández Maria Daniela</p>
+            <p>Telefonos: 495014 / 495171 / 495115 / 495348</p>
+            <p>Email: <a id="link_email" href="mailto:secplaneamientoanguil@lapampa.gob.ar">secplaneamientoanguil@lapampa.gob.ar</a></p>
+        </div>
+    </footer>
+</body>
+</html>
