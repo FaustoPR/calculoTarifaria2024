@@ -5,16 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/calculo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="js/calculo.js"></script>
 </head>
 <body>
-    
     <header>
         <img src="imgs/logo_anguil.jpg" alt="logo" >
         <h1>Calculadora: Ordenanza Tarifaria 2024</h1>
     </header>
 
     <main>
+        <div id="popup" style="display: none;">
+            <div id="divPopup">
+              <span id="botonCerrarPopup" >&times;</span>
+              <p>Ingrese los ultimos datos para imprimir!</p>
+              <input type="text" id="popupNombre" class="inputPopup" placeholder="Ingrese su nombre: ">
+              <input type="text" id="popupUbicacion" class="inputPopup" placeholder="Ingrese la ubicacion de la obra: ">
+              <input type="text" id="popupReferencia" class="inputPopup" placeholder="Ingrese la referencia: ">
+              <button id="botonImprimir">Print</button>
+            </div>
+        </div>
+
         <img id="imagen_fondo" src="imgs/logo_anguil.jpg" alt="logo_anguil">
 
         <div id="div_referente">
@@ -267,7 +278,7 @@
                 <section id="section_botones">
                     <div id="div_botones">
                         <button type="button" id="botonCalculo" >Calcular</button>
-                        <button id="botonImprimir">Calcular e Imprimir</button>
+                        <button id="botonCalcularEImprimir">Calcular e Imprimir</button>
                     </div>
                 </section>
 

@@ -1,9 +1,13 @@
+import {generarPDF} from './generarPDF.js'
+
 document.addEventListener('DOMContentLoaded', function(){
     /////////////////////////////////////////////////////////////////////
     // Reiniciar checkbox/input/radio al reiniciar pagina //
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const radios = document.querySelectorAll('input[type="radio"]');
     const inputs = document.querySelectorAll('input[type="text"]');
+    const inputsMenosPopup = document.querySelectorAll('input[type="text"]:not(.inputPopup)');
+
 
     function resetCheckboxRadioInput() {
         checkboxes.forEach(checkbox => {
@@ -16,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
             input.value = '';
         });
         botonCalculo.disabled = true
-        botonImprimir.disabled = true
+        botonCalcularEImprimir.disabled = true
     }
     ////////////////////////////////////////////////////////////////////
     // Calculo de resultado //
@@ -64,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const inputSuperficieConformeObra = document.getElementById('superficieConformeObra')
 
         if (inputSuperficieConformeObra.value !== '') {
-            let superficieConformeObra = inputSuperficieConformeObra.value
+            let superficieConformeObra = parseFloat(inputSuperficieConformeObra.value.replace(',','.'))
             if (superficieConformeObra > 0 && superficieConformeObra <= 120) {
                 return 5370
             } else if (superficieConformeObra > 120 && superficieConformeObra <= 500) {
@@ -84,12 +88,10 @@ document.addEventListener('DOMContentLoaded', function(){
         if (divViviendaParticular.style.display === 'flex') {
             const superficieViviendaParticular = document.getElementById('superficieViviendaParticular')
             let costoViviendaParticular = parseFloat(superficieViviendaParticular.value.replace(',','.')) * 204
-            console.log(`Costo Vivienda Particular: ${costoViviendaParticular}`)
             return costoViviendaParticular
         } else if (divViviendaSocial.style.display === 'flex') {
             const superficieViviendaSocial = document.getElementById('superficieViviendaSocial')
             let costoViviendaSocial = parseFloat(superficieViviendaSocial.value.replace(',','.')) * 81
-            console.log(`Costo Vivienda Social: ${costoViviendaSocial}`)
             return costoViviendaSocial
         }
         return 0
@@ -99,34 +101,27 @@ document.addEventListener('DOMContentLoaded', function(){
         if (divUsoComercialDepositoEtc.style.display === 'flex') {
             const superficieDepositoEtc = document.getElementById('superficieDepositoEtc')
             let costoDepositoEtc = parseFloat(superficieDepositoEtc.value.replace(',','.')) * 273
-            console.log(`Costo Deposito: ${costoDepositoEtc}`)
             return costoDepositoEtc
         } else if (divUsoComercialBancosHoteles.style.display === 'flex') {
             const superficieBancosHoteles = document.getElementById('superficieBancosHoteles')
             let costoBancosHoteles = parseFloat(superficieBancosHoteles.value.replace(',','.')) * 429
-            console.log(`Costo Bancos y Hoteles: ${costoBancosHoteles}`)
             return costoBancosHoteles
         }
         return 0
     }
 
     function calculoConstruccionIndustrial() {
-        console.log("calculo construccion industrial")
         if (divConstruccionIndustrialFabricas.style.display === 'flex') {
             const superficieFabricas = document.getElementById('superficieFabricas')
-            console.log(superficieFabricas)
             let costoFabricas = parseFloat(superficieFabricas.value.replace(',','.')) * 288
-            console.log(`Costo Fabricas: ${costoFabricas}`)
             return costoFabricas
         } else if (divConstruccionIndustrialGalpones.style.display === 'flex') {
             const superficieGalpones = document.getElementById('superficieGalpones')
             let costoGalpones = parseFloat(superficieGalpones.value.replace(',','.')) * 183
-            console.log(`Costo Galpones: ${costoGalpones}`)
             return costoGalpones
         } else if (divConstruccionIndustrialTinglados.style.display === 'flex') {
             const superficieTinglados = document.getElementById('superficieTinglados')
             let costoTinglados = parseFloat(superficieTinglados.value.replace(',','.')) *  108
-            console.log(`Costo Tinglados: ${costoTinglados}`)
             return costoTinglados
         }
         return 0
@@ -136,12 +131,10 @@ document.addEventListener('DOMContentLoaded', function(){
         if (divConstruccionesVariasCineEtc.style.display === 'flex') {
             const superficieCineEtc = document.getElementById('superficieCineEtc')
             let costoCineEtc = parseFloat(superficieCineEtc.value.replace(',','.')) * 546
-            console.log(`Costo Cine y etc: ${costoCineEtc}`)
             return costoCineEtc
         } else if (divConstruccionesVariasClubesEtc.style.display === 'flex') {
             const superficieClubesEtc = document.getElementById('superficieClubesEtc') 
             let costoClubesEtc = parseFloat(superficieClubesEtc.value.replace(',','.')) * 738
-            console.log(`Costo Clubes y etc: ${costoClubesEtc}`)
             return costoClubesEtc
         } 
         return 0
@@ -150,14 +143,12 @@ document.addEventListener('DOMContentLoaded', function(){
     function calculoTanques() {
         const cantTanques = document.getElementById('cantTanques')
         let costoTanques = parseFloat(cantTanques.value.replace(',','.')) * 5000
-        console.log(`Costo Tanques: ${costoTanques}`)
         return costoTanques
     }
 
     function calculoToldo() {
         const inputToldo = document.getElementById('superficieToldo')
         let costoToldo = parseFloat(inputToldo.value.replace(',','.')) * 90
-        console.log(`Costo Toldo: ${costoToldo}`)
         return costoToldo
     }
     
@@ -172,29 +163,22 @@ document.addEventListener('DOMContentLoaded', function(){
         const divCantTanques = document.getElementById('divCantTanques')
         const divToldo = document.getElementById('divToldo')
         let costoArticulo25 = 0
-        console.log("calculo articulo 25")
         if (divVivienda.style.display === 'flex') {
-            console.log("calculo vivienda")
             costoArticulo25 += calculoVivienda()
         }
         if (divUsoComercial.style.display === 'flex') {
-            console.log("calculo uso comercial")
             costoArticulo25 += calculoUsoComercial()
         }
         if (divConstruccionIndustrial.style.display === 'flex') {
-            console.log("calculo construccion industrial")
             costoArticulo25 += calculoConstruccionIndustrial()
         }
         if (divConstruccionesVarias.style.display === 'flex') {
-            console.log("calculo construccion varia")
             costoArticulo25 += calculoConstruccionVarias()
         }
         if (divCantTanques.style.display === 'flex') {
-            console.log("calculo tanques")
             costoArticulo25+= calculoTanques()
         }
         if (divToldo.style.display === 'flex') {
-            console.log("calculo toldo")
             costoArticulo25 += calculoToldo()
         }
         return costoArticulo25
@@ -223,11 +207,94 @@ document.addEventListener('DOMContentLoaded', function(){
         return costoArticulo31
     }
 
-    const botonCalculo = document.getElementById('botonCalculo') 
-    const botonImprimir = document.getElementById('botonImprimir')
 
+    // ***** Funciones para imprimir ***** //
+    function tiposDeObra() {
+        const inputSuperficieAmpliacion = document.getElementById('superficieAmpliacion')
+        const inputSuperficieConformeObra = document.getElementById('superficieConformeObra')
+        const inputSuperficieDemolicion = document.getElementById('superficieDemolicion')
+        const inputSuperficieObraNueva = document.getElementById('superficieObraNueva')
+        let tiposDeObra = ""
+        if (inputSuperficieAmpliacion.value !== '') {
+            tiposDeObra += "Ampliacion"
+        }
+        if (inputSuperficieConformeObra.value !== '') {
+            if (tiposDeObra !== "" ) {
+                tiposDeObra += " + Conforme a obra"
+            } else { tiposDeObra += "Conforme a obra"}
+        }
+        if (inputSuperficieDemolicion.value !== '') {
+            if (tiposDeObra !== "") {
+                tiposDeObra += " + Demolicion"
+            } else (tiposDeObra += "Demolicion")
+        }
+        if (inputSuperficieObraNueva.value !== '') {
+            if (tiposDeObra !== "") {
+                tiposDeObra += " + Obra nueva"
+            } else (tiposDeObra += "Obra nueva")
+        }
+        if (tiposDeObra === "") {
+            tiposDeObra += "No se selecciono ningun tipo de obra"
+        }
+        return tiposDeObra
+    }
+
+    function tiposDeConstrucciones() {
+        const viviendaCheckbox = document.getElementById('vivienda')
+        const comercialCheckbox = document.getElementById('comercial')
+        const industrialCheckbox = document.getElementById('industrial')
+        const variasCheckbox = document.getElementById('varias')
+        const tanquesCheckbox = document.getElementById('tanques')
+        const toldoCheckbox = document.getElementById('toldo')
+        let tiposDeConstrucciones = ""
+        if (viviendaCheckbox.checked) {
+            tiposDeConstrucciones += "Vivienda"
+        }
+        if (comercialCheckbox.checked) {
+            if (tiposDeConstrucciones !== "" ) {
+                tiposDeConstrucciones += " + Comercial"
+            } else (tiposDeConstrucciones += "Comercial")
+        }
+        if (industrialCheckbox.checked) {
+            if (tiposDeConstrucciones !== "" ) {
+                tiposDeConstrucciones += " + Industrial"
+            } else (tiposDeConstrucciones += "Industrial")
+        }
+        if (variasCheckbox.checked) {
+            if (tiposDeConstrucciones !== "" ) {
+                tiposDeConstrucciones += " + Varias"
+            } else (tiposDeConstrucciones += "Varias")
+        }
+        if (tanquesCheckbox.checked) {
+            if (tiposDeConstrucciones !== "" ) {
+                tiposDeConstrucciones += " + Tanques"
+            } else (tiposDeConstrucciones += "Tanques")
+        }
+        if (toldoCheckbox.checked) {
+            if (tiposDeConstrucciones !== "" ) {
+                tiposDeConstrucciones += " + Toldo"
+            } else (tiposDeConstrucciones += "Toldo")
+        }
+        if (tiposDeConstrucciones === "") {
+            tiposDeConstrucciones += "No se selecciono ningun tipo de construccion"
+        }
+        return tiposDeConstrucciones
+    }
+
+    // ***** Botones Calculo y Imprimir ***** //
+    const botonCalculo = document.getElementById('botonCalculo') 
+    const botonCalcularEImprimir = document.getElementById('botonCalcularEImprimir')
+    const botonImprimir = document.getElementById('botonImprimir')
+    const botonCerrarPopup = document.getElementById('botonCerrarPopup')
+
+    
     // const inputSuperficiesPrincipales = document.getElementsByClassName('superficiesPrincipales')
     // const arraySuperficiesPrincipales = Array.from(inputSuperficiesPrincipales)    
+
+    botonCerrarPopup.addEventListener('click', function() {
+        const popup = document.getElementById("popup")
+        popup.style.display = "none"
+    })
     
     botonCalculo.addEventListener('click', function(e) {
         e.preventDefault();
@@ -241,27 +308,50 @@ document.addEventListener('DOMContentLoaded', function(){
         costoTotal += calculoArticulo29(superficieTotal)
         costoTotal += calculoArticulo31()
         
-
-
         const resultado = document.getElementById('resultado');
 
         resultado.textContent = costoTotal;
-        console.log(`Superficie Total: ${superficieTotal}`)
+    })
 
+    botonCalcularEImprimir.addEventListener('click', function(e) {
+        const popup = document.getElementById("popup")
+        popup.style.display = "flex"
+
+        const resultado = document.getElementById('resultado');
+        e.preventDefault();
+
+        let superficieTotal = calculoSuperficieTotal()
+        let costoTotal = 0
+        costoTotal += calculoArticulo20(superficieTotal)
+        costoTotal += calculoArticulo21()
+        costoTotal += calculoArticulo25()
+        costoTotal += calculoArticulo26()
+        costoTotal += calculoArticulo29(superficieTotal)
+        costoTotal += calculoArticulo31()
+ 
+        resultado.textContent = costoTotal;
     })
 
     botonImprimir.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        const resultado = document.getElementById('resultado');
-
-        resultado.textContent = "Total";
+        e.preventDefault()
+        const solicitante = document.getElementById('popupNombre').value
+        const ubicacion = document.getElementById('popupUbicacion').value
+        const referencia = document.getElementById('popupReferencia').value
+        let superficieTotal = calculoSuperficieTotal()
+        let costoTotal = 0
+        costoTotal += calculoArticulo20(superficieTotal)
+        costoTotal += calculoArticulo21()
+        costoTotal += calculoArticulo25()
+        costoTotal += calculoArticulo26()
+        costoTotal += calculoArticulo29(superficieTotal)
+        costoTotal += calculoArticulo31()
+        generarPDF(solicitante, ubicacion, tiposDeObra(), tiposDeConstrucciones(), superficieTotal, referencia, calculoArticulo20(superficieTotal), calculoArticulo21(), calculoArticulo25(), calculoArticulo26(), calculoArticulo29(superficieTotal), calculoArticulo31(), costoTotal)
     })
 
     function validateAndToggleButton() {
         let allFilled = true;
         
-        inputs.forEach(input => {
+        inputsMenosPopup.forEach(input => {
             if (isElementVisible(input)) {
                 input.value = input.value.replace(/[^\d.,]/g, '');
     
@@ -272,10 +362,10 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     
         botonCalculo.disabled = !allFilled;
-        botonImprimir.disabled = !allFilled;
+        botonCalcularEImprimir.disabled = !allFilled;
     }
     
-    inputs.forEach(input => {
+    inputsMenosPopup.forEach(input => {
         input.addEventListener('input', validateAndToggleButton);
     });
     
@@ -361,6 +451,8 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divVivienda.style.display = 'none'
+            viviendaParticularRadio.checked = false
+            viviendaSocialRadio.checked = false
             divViviendaParticular.style.display = 'none'
             divViviendaSocial.style.display = 'none'
         }
@@ -372,6 +464,8 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divUsoComercial.style.display = 'none'
+            usoComercialBancosHotelesRadio.checked = false
+            usoComercialDepositoEtcRadio.checked = false
             divUsoComercialBancosHoteles.style.display = 'none'
             divUsoComercialDepositoEtc.style.display = 'none'
         }
@@ -383,6 +477,9 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divConstruccionIndustrial.style.display = 'none'
+            construccionIndustrialFabricasRadio.checked = false
+            construccionIndustrialGalponesRadio.checked = false
+            construccionIndustrialTingladosRadio.checked = false
             divConstruccionIndustrialFabricas.style.display = 'none'
             divConstruccionIndustrialGalpones.style.display = 'none'
             divConstruccionIndustrialTinglados.style.display = 'none'
@@ -395,6 +492,8 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divConstruccionesVarias.style.display = 'none'
+            construccionesVariasCineEtcRadio.checked = false
+            construccionesVariasClubesEtc.checked = false
             divConstruccionesVariasCineEtc.style.display = 'none'
             divConstruccionesVariasClubesEtc.style.display = 'none'
         }
