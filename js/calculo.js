@@ -281,6 +281,17 @@ document.addEventListener('DOMContentLoaded', function(){
         return tiposDeConstrucciones
     }
 
+    function formatearNumero(num) {
+        // Convert the number to a string and split it by the decimal point
+        let [integerPart, decimalPart] = num.toString().split('.');
+      
+        // Add a period every three digits in the integer part
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    
+        // Combine the integer part and decimal part, replacing the original decimal point with a comma
+        return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
+    }
+
     // ***** Botones Calculo y Imprimir ***** //
     const botonCalculo = document.getElementById('botonCalculo') 
     const botonCalcularEImprimir = document.getElementById('botonCalcularEImprimir')
@@ -309,8 +320,8 @@ document.addEventListener('DOMContentLoaded', function(){
         costoTotal += calculoArticulo31()
         
         const resultado = document.getElementById('resultado');
-
-        resultado.textContent = costoTotal;
+        let costoTotalFormateado = formatearNumero(costoTotal)
+        resultado.textContent = "$" + costoTotalFormateado;
     })
 
     botonCalcularEImprimir.addEventListener('click', function(e) {
@@ -328,8 +339,8 @@ document.addEventListener('DOMContentLoaded', function(){
         costoTotal += calculoArticulo26()
         costoTotal += calculoArticulo29(superficieTotal)
         costoTotal += calculoArticulo31()
- 
-        resultado.textContent = costoTotal;
+        let costoTotalFormateado = formatearNumero(costoTotal)
+        resultado.textContent = "$" + costoTotalFormateado;
     })
 
     botonImprimir.addEventListener('click', function(e) {
