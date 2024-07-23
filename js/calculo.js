@@ -287,6 +287,11 @@ document.addEventListener('DOMContentLoaded', function(){
       
         // Add a period every three digits in the integer part
         integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+        // Limit the decimal part to a maximum of three digits
+        if (decimalPart) {
+            decimalPart = decimalPart.slice(0, 3);  
+        }
     
         // Combine the integer part and decimal part, replacing the original decimal point with a comma
         return decimalPart ? `${integerPart},${decimalPart}` : integerPart;
