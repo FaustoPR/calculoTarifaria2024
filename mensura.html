@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="module" src="js/mensura.js"></script>
+</head>
+<body>
+    <header>
+        <img src="imgs/logo_anguil.jpg" alt="logo" >
+        <h1>Calculadora: Ordenanza Tarifaria 2024 - Catastro</h1>
+    </header>
+
+    <main>
+        <div id="popup" style="display: none;">
+            <div id="divPopup">
+              <span id="botonCerrarPopup" >&times;</span>
+              <p>Ingrese los ultimos datos para imprimir!</p>
+              <input type="text" id="popupNombre" class="inputPopup" placeholder="Ingrese su nombre: ">
+              <input type="text" id="popupNomenclatura" class="inputPopup" placeholder="Ingrese la nomenclatura catastral: ">
+              <input type="text" id="popupPartida" class="inputPopup" placeholder="Ingrese el numero de partida: ">
+              <input type="text" id="popupObjetoMensura" class="inputPopup" placeholder="Ingrese el objeto de la mensura: ">
+              <button id="botonImprimir">IMPRIMIR</button>
+            </div>
+        </div>
+
+        <img id="imagen_fondo" src="imgs/logo_anguil.jpg" alt="logo_anguil">
+
+        <div id="div_referente">
+            <div id="referente"><h3>Referente al capitulo decimo: Derechos de catastro</h3></div>
+        </div>
+
+        <form action="" method="post">
+            <section>
+                <div class="encuestas_principales choice">
+                    <label for="a1">Solicitud de Informacion <input type="checkbox" id="a1" name="Certificaciones[]" value="a1"></label> <!--sinFormulario-->
+                    
+                    <label for="a2">Croquis de Ubicación y/o antecedentes <input type="checkbox" id="a2" name="Certificaciones[]" value="a2"></label> <!--solicitud-->
+                </div>
+                
+                
+
+                <div class="encuestas_principales choice">
+                    <label for="b1">Autorizacion de plano de mensura <input type="checkbox" id="b1" name="AutorizacionPlano[]" value="b1"></label>
+                    
+                    <label for="b2">Inscripcion de parcela <input type="checkbox" id="b2" name="AutorizacionPlano[]" value="b2"></label>
+        
+                    <label for="b3">Inscripcion de subparcela <input type="checkbox" id="b3" name="AutorizacionPlano[]" value="b3"></label>
+        
+                    <label for="b4">Nueva manzana o superficie rodeada de calles <input type="checkbox" id="b4" name="AutorizacionPlano[]" value="b4"></label>
+        
+                    <label for="b5">Visacion proyecto plano subdivision <input type="checkbox" id="b5" name="AutorizacionPlano[]" value="b5"></label>
+                </div>
+                
+                <div id="divB2" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de parcelas</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadB2" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divB3" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de subparcelas</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadB3" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divB4" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de manzanas o superficie rodeada de calles</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadB4" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div class="encuestas_principales choice">
+                    <label for="c1">Inscripcion de titulo <input type="checkbox" id="c1" name="AutorizacionPlano[]" value="c1"></label>
+                </div>
+
+                <div id="divC1" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de fincas</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadC1" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+        
+                <div class="encuestas_principales choice">
+                    <label for="d1">Verificaciones topometrica de estacas <input type="checkbox" id="d1" name="AutorizacionPlano[]" value="d1"></label>
+                    
+                    <label for="d2">Verificacion de amojonamiento <input type="checkbox" id="d2" name="AutorizacionPlano[]" value="d2"></label>
+                </div>
+
+                <div id="divD1" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de parcelas</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadD1" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+
+                <div id="divD2" class="encuestas_secundarias encuestas_texto superficiesPrincipales" style="display: none;">
+                    <div class="div_izquierdo">
+                        <p>Cantidad de mojones</p>
+                    </div>
+                    <div class="div_derecho">
+                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <input type="text" id="cantidadD2" step="0.01"  >
+                        <span id="errorSuperficieM2" style="color: red;"></span>
+                    </div>
+                </div>
+        
+                <div class="encuestas_principales choice">
+                    <label for="e1">Aprobación de planos de pre-horizontalidad <input type="checkbox" id="e1" name="AutorizacionPlano[]" value="e1"></label>
+                </div>
+
+
+                <section id="section_botones">
+                    <div id="div_botones">
+                        <button type="button" id="botonCalculo" >CALCULAR</button>
+                        <button id="botonCalcularEImprimir">CALCULAR E IMPRIMIR</button>
+                        <button id="botonLimpiar">LIMPIAR</button>
+                    </div>
+                </section>
+
+                <section id="section_total">
+                    <p>TOTAL</p>
+                    <div id="resultado"></div>
+                </section>
+            </section>            
+        </form>
+    </main>
+
+    <footer>
+        <img src="imgs/logo_anguil.jpg" alt="logo">
+        <div>
+            <p>Informacion y Contacto</p>
+            <p>Intendenta: Fernández Maria Daniela</p>
+            <p>Telefonos: 495014 / 495171 / 495115 / 495348</p>
+            <p>Email: <a id="link_email" href="mailto:secplaneamientoanguil@lapampa.gob.ar">secplaneamientoanguil@lapampa.gob.ar</a></p>
+        </div>
+    </footer>
+</body>
+</html>
