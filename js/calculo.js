@@ -428,6 +428,11 @@ document.addEventListener('DOMContentLoaded', function(){
         divConstruccionIndustrialTinglados.style.display = 'none'
         divConstruccionesVariasCineEtc.style.display = 'none'
         divConstruccionesVariasClubesEtc.style.display = 'none'
+
+        // Limpiar resultado
+        const resultado = document.getElementById('resultado')
+        resultado.textContent = ''
+
     })
 
     // function validateAndToggleButton() {
@@ -447,8 +452,6 @@ document.addEventListener('DOMContentLoaded', function(){
     //     botonCalculo.disabled = !allFilled;
     //     botonCalcularEImprimir.disabled = !allFilled;
     // }
-
-    //hacer que funcione el desactivar los checks y que tome a1 como valido
 
     function validateAndToggleButton() {
         let allFilled = true

@@ -268,6 +268,10 @@ document.addEventListener('DOMContentLoaded', function(){
         divC1.style.display = 'none'
         divD1.style.display = 'none'
         divD2.style.display = 'none'
+
+        // Limpiar resultado
+        const resultado = document.getElementById('resultado')
+        resultado.textContent = ''
     })
 
     function validateAndToggleButton() {
