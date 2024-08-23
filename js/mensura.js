@@ -271,20 +271,19 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 
     function validateAndToggleButton() {
-        let allFilled = true;
-        let checkboxChecked = false;
-        let anyVisibleInputs = false; // Flag to track if there are any visible inputs
+        let allFilled = true
+        let checkboxChecked = false
+        let anyVisibleInputs = false
         inputsMenosPopup.forEach(input => {
             if (isElementVisible(input)) {
-                anyVisibleInputs = true; // At least one input is visible
-                input.value = input.value.replace(/[^\d]/g, '');
+                anyVisibleInputs = true;
+                input.value = input.value.replace(/[^\d]/g, '')
                 if (input.value === '') {
                     allFilled = false;
                 }
             }
-        });
-    
-        // If no inputs are visible, set allFilled to false
+        })
+
         if (!anyVisibleInputs) {
             allFilled = false;
         }
@@ -294,26 +293,15 @@ document.addEventListener('DOMContentLoaded', function(){
         const B1Checkbox = document.getElementById('b1')
         const B5Checkbox = document.getElementById('b5')
         const E1Checkbox = document.getElementById('e1')
-        console.log(`A1 checked: ${A1Checkbox.checked}`);
-        console.log(`A2 checked: ${A2Checkbox.checked}`);
-        console.log(`B1 checked: ${B1Checkbox.checked}`);
-        console.log(`B5 checked: ${B5Checkbox.checked}`);
-        console.log(`E1 checked: ${E1Checkbox.checked}`);
 
         if (A1Checkbox.checked || A2Checkbox.checked || B1Checkbox.checked || B5Checkbox.checked || E1Checkbox.checked) {
             checkboxChecked = true;
         }
     
-        // Enable buttons if all inputs are filled or if checkbox A or C is checked
-        // const enableButtons = allFilled && checkboxChecked;
+        
         const enableButtons = allFilled || checkboxChecked;
-        console.log(`All inputs filled: ${allFilled}`);
-        console.log(`Checkbox checked: ${checkboxChecked}`);
-        console.log(`Enable buttons: ${enableButtons}`);
         botonCalculo.disabled = !enableButtons;
         botonCalcularEImprimir.disabled = !enableButtons;
-        // botonCalculo.disabled = !allFilled;
-        // botonCalcularEImprimir.disabled = !allFilled;
     }
     
     inputsMenosPopup.forEach(input => {

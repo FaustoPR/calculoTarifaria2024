@@ -39,6 +39,10 @@
                 
                 <p class="subrayado">Indicar según corresponda al plano.</p>
 
+                <div class="encuestas_principales choice">                    
+                    <label for="a2">Croquis de Ubicación y/o antecedentes <input type="checkbox" id="a2" name="Certificaciones[]" value="a2"></label> <!--solicitud-->
+                </div>
+
                 <div class="encuestas_principales choice">
                     <label for="ampliacion">Ampliacion <input type="checkbox" id="ampliacion" name="CaracteristicaPlano[]" value="ampliacion"></label>
                     
@@ -54,7 +58,7 @@
                         <p>Superficie de ampliacion</p>
                     </div>
                     <div class="div_derecho">
-                        <!-- oninput="validateAndToggleButton(this)" -->
+                        <!--  -->
                         <input type="text" id="superficieAmpliacion" step="0.01"  >
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
@@ -65,7 +69,7 @@
                         <p>Superficie de construccion existente sin declarar</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="superficieConformeObra" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="superficieConformeObra" >
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
                 </div>
@@ -75,7 +79,7 @@
                         <p>Superficie de demolicion</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="superficieDemolicion" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="superficieDemolicion" >
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
                 </div>
@@ -85,7 +89,7 @@
                         <p>Superficie de obra nueva</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="superficieObraNueva" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="superficieObraNueva" >
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
                 </div>
@@ -128,7 +132,7 @@
                             <p>Superficie de la vivienda particular</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieViviendaParticular" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieViviendaParticular" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -137,7 +141,7 @@
                             <p>Superficie de la vivienda social</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieViviendaSocial" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieViviendaSocial" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -156,7 +160,7 @@
                             <p>Superficie de uso comercial</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieDepositoEtc" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieDepositoEtc" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -165,7 +169,7 @@
                             <p>Superficie de bancos u hoteles</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieBancosHoteles" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieBancosHoteles" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -186,7 +190,7 @@
                             <p>Superficie de fabricas</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieFabricas" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieFabricas" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -195,7 +199,7 @@
                             <p>Superficie de galpones</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieGalpones" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieGalpones" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -204,7 +208,7 @@
                             <p>Superficie de tinglados</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieTinglados" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieTinglados" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -223,7 +227,7 @@
                             <p>Superficie de cines, sanatorios y teatros</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieCineEtc" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieCineEtc" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -232,7 +236,7 @@
                             <p>Superficie de clubes, estadios y instalaciones educacionales</p>
                         </div>
                         <div class="div_derecho">
-                            <input type="text" id="superficieClubesEtc" oninput="validateAndToggleButton(this)">
+                            <input type="text" id="superficieClubesEtc" >
                             <span id="errorSuperficieM2" style="color: red;"></span>
                         </div>
                     </div>
@@ -243,7 +247,7 @@
                         <p>Cantidad de tanques</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="cantTanques" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="cantTanques">
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
                 </div>
@@ -253,7 +257,7 @@
                         <p>Superficie de toldo</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="superficieToldo" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="superficieToldo">
                         <span id="errorSuperficieM2" style="color: red;"></span>
                     </div>
                 </div>
@@ -265,7 +269,7 @@
                         <p>Superficie cubierta y/o semicubierta fuera de linea municipal</p>
                     </div>
                     <div class="div_derecho">
-                        <input type="text" id="superficieCubierta" oninput="validateAndToggleButton(this)">
+                        <input type="text" id="superficieCubierta">
                         <span id="errorSuperficieCubierta" style="color: red;"></span>
                     </div>                    
                 </div>

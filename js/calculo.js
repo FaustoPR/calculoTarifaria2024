@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', function(){
     const radios = document.querySelectorAll('input[type="radio"]');
     const inputs = document.querySelectorAll('input[type="text"]');
     const inputsMenosPopup = document.querySelectorAll('input[type="text"]:not(.inputPopup)');
+    const inputsMenosPopupYSuperficieCubierta = document.querySelectorAll('input[type="text"]:not(.inputPopup):not(#superficieCubierta)');
+    const A2Checkbox = document.getElementById('a2');
+    A2Checkbox.addEventListener('change', validateAndToggleButton);
+
 
 
     function resetCheckboxRadioInput() {
@@ -48,6 +52,16 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         return superficieTotal
+    }
+
+    // ***** Calculo Articulo 19 ***** //
+    function calculoArticulo19() {
+        const A2Checkbox = document.getElementById('a2')
+        let costoA2 = 0
+        if (A2Checkbox.checked) {
+            costoA2 += 3000
+        }
+        return costoA2
     }
 
     // ***** Calculo Articulo 20 ***** //
@@ -187,7 +201,10 @@ document.addEventListener('DOMContentLoaded', function(){
     // ***** Calculo Articulo 26 ***** // 
     function calculoArticulo26() {
         const superficieCubierta = document.getElementById('superficieCubierta')
-        let costoArticulo26 = parseFloat(superficieCubierta.value.replace(',','.')) * 648
+        let costoArticulo26 = 0
+        if (superficieCubierta.value !== '') {
+            costoArticulo26 += parseFloat(superficieCubierta.value.replace(',','.')) * 648
+        }
         return costoArticulo26
     }
 
@@ -207,6 +224,18 @@ document.addEventListener('DOMContentLoaded', function(){
         return costoArticulo31
     }
 
+    // **** Calculo Costo Total ***** //
+    function calculoTotal(superficieTotal){
+        let costoTotal = 0
+        costoTotal += calculoArticulo19()
+        costoTotal += calculoArticulo20(superficieTotal)
+        costoTotal += calculoArticulo21()
+        costoTotal += calculoArticulo25()
+        costoTotal += calculoArticulo26()
+        costoTotal += calculoArticulo29(superficieTotal)
+        costoTotal += calculoArticulo31()
+        return costoTotal
+    }
 
     // ***** Funciones para imprimir ***** //
     function tiposDeObra() {
@@ -302,6 +331,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const botonCalcularEImprimir = document.getElementById('botonCalcularEImprimir')
     const botonImprimir = document.getElementById('botonImprimir')
     const botonCerrarPopup = document.getElementById('botonCerrarPopup')
+    const botonLimpiar = document.getElementById('botonLimpiar')
 
     
     // const inputSuperficiesPrincipales = document.getElementsByClassName('superficiesPrincipales')
@@ -316,14 +346,7 @@ document.addEventListener('DOMContentLoaded', function(){
         e.preventDefault();
 
         let superficieTotal = calculoSuperficieTotal()
-        let costoTotal = 0
-        costoTotal += calculoArticulo20(superficieTotal)
-        costoTotal += calculoArticulo21()
-        costoTotal += calculoArticulo25()
-        costoTotal += calculoArticulo26()
-        costoTotal += calculoArticulo29(superficieTotal)
-        costoTotal += calculoArticulo31()
-        
+        let costoTotal = calculoTotal(superficieTotal)        
         const resultado = document.getElementById('resultado');
         let costoTotalFormateado = formatearNumero(costoTotal)
         resultado.textContent = "$" + costoTotalFormateado;
@@ -337,13 +360,7 @@ document.addEventListener('DOMContentLoaded', function(){
         e.preventDefault();
 
         let superficieTotal = calculoSuperficieTotal()
-        let costoTotal = 0
-        costoTotal += calculoArticulo20(superficieTotal)
-        costoTotal += calculoArticulo21()
-        costoTotal += calculoArticulo25()
-        costoTotal += calculoArticulo26()
-        costoTotal += calculoArticulo29(superficieTotal)
-        costoTotal += calculoArticulo31()
+        let costoTotal = calculoTotal(superficieTotal)        
         let costoTotalFormateado = formatearNumero(costoTotal)
         resultado.textContent = "$" + costoTotalFormateado;
     })
@@ -354,31 +371,119 @@ document.addEventListener('DOMContentLoaded', function(){
         const ubicacion = document.getElementById('popupUbicacion').value
         const referencia = document.getElementById('popupReferencia').value
         let superficieTotal = calculoSuperficieTotal()
-        let costoTotal = 0
-        costoTotal += calculoArticulo20(superficieTotal)
-        costoTotal += calculoArticulo21()
-        costoTotal += calculoArticulo25()
-        costoTotal += calculoArticulo26()
-        costoTotal += calculoArticulo29(superficieTotal)
-        costoTotal += calculoArticulo31()
+        let costoTotal = calculoTotal(superficieTotal)        
         generarPDF(solicitante, ubicacion, tiposDeObra(), tiposDeConstrucciones(), superficieTotal, referencia, calculoArticulo20(superficieTotal), calculoArticulo21(), calculoArticulo25(), calculoArticulo26(), calculoArticulo29(superficieTotal), calculoArticulo31(), costoTotal)
     })
 
+    botonLimpiar.addEventListener('click', function(e) {
+        e.preventDefault()
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        radios.forEach(radio => {
+            radio.checked = false;
+        });
+        inputs.forEach(input => {
+            input.value = '';
+        });
+        botonCalculo.disabled = true
+        botonCalcularEImprimir.disabled = true
+
+        // DESACTIVAR TODOS LOS DIV
+        const divAmpliacionM2 = document.getElementById('divAmpliacion')
+        const divConformeObraM2 = document.getElementById('divConformeObra')
+        const divDemolicionM2 = document.getElementById('divDemolicion')
+        const divObraNuevaM2 = document.getElementById('divObraNueva')
+        const divVivienda = document.getElementById('divVivienda')
+        const divUsoComercial = document.getElementById('divUsoComercial')
+        const divConstruccionIndustrial = document.getElementById('divConstruccionIndustrial')
+        const divConstruccionesVarias = document.getElementById('divConstruccionesVarias')
+        const divCantTanques = document.getElementById('divCantTanques')
+        const divToldo = document.getElementById('divToldo')
+        const divViviendaParticular = document.getElementById('divViviendaParticular')
+        const divViviendaSocial = document.getElementById('divViviendaSocial')
+        const divUsoComercialDepositoEtc = document.getElementById('divUsoComercialDepositoEtc')
+        const divUsoComercialBancosHoteles = document.getElementById('divUsoComercialBancosHoteles')
+        const divConstruccionIndustrialFabricas = document.getElementById('divConstruccionIndustrialFabricas')
+        const divConstruccionIndustrialGalpones = document.getElementById('divConstruccionIndustrialGalpones')
+        const divConstruccionIndustrialTinglados = document.getElementById('divConstruccionIndustrialTinglados')
+        const divConstruccionesVariasCineEtc = document.getElementById('divConstruccionesVariasCineEtc')
+        const divConstruccionesVariasClubesEtc = document.getElementById('divConstruccionesVariasClubesEtc')
+        divAmpliacionM2.style.display = 'none'
+        divConformeObraM2.style.display = 'none'
+        divDemolicionM2.style.display = 'none'
+        divObraNuevaM2.style.display = 'none'
+        divVivienda.style.display = 'none'
+        divUsoComercial.style.display = 'none'
+        divConstruccionIndustrial.style.display = 'none'
+        divConstruccionesVarias.style.display = 'none'
+        divCantTanques.style.display = 'none'
+        divToldo.style.display = 'none'
+        divViviendaParticular.style.display = 'none'
+        divViviendaSocial.style.display = 'none'
+        divUsoComercialDepositoEtc.style.display = 'none'
+        divUsoComercialBancosHoteles.style.display = 'none'
+        divConstruccionIndustrialFabricas.style.display = 'none'
+        divConstruccionIndustrialGalpones.style.display = 'none'
+        divConstruccionIndustrialTinglados.style.display = 'none'
+        divConstruccionesVariasCineEtc.style.display = 'none'
+        divConstruccionesVariasClubesEtc.style.display = 'none'
+    })
+
+    // function validateAndToggleButton() {
+    //     let allFilled = true;
+    //     const superficieCubierta = 'superficieCubierta'
+    //     inputsMenosPopup.forEach(input => {
+    //         if (isElementVisible(input)) {
+    //             input.value = input.value.replace(/[^\d.,]/g, '');
+    //             console.log(input.id)
+    //             if (input.id !== superficieCubierta && input.value === '') {
+    //                 console.log(input.id)
+    //                 allFilled = false;
+    //             }
+    //         }
+    //     });
+    
+    //     botonCalculo.disabled = !allFilled;
+    //     botonCalcularEImprimir.disabled = !allFilled;
+    // }
+
+    //hacer que funcione el desactivar los checks y que tome a1 como valido
+
     function validateAndToggleButton() {
-        let allFilled = true;
-        
+        let allFilled = true
+        let checkboxChecked = false
+        const superficieCubierta = 'superficieCubierta'
+        let anyVisibleInputs = false
         inputsMenosPopup.forEach(input => {
             if (isElementVisible(input)) {
-                input.value = input.value.replace(/[^\d.,]/g, '');
-    
-                if (input.value === '') {
-                    allFilled = false;
-                }
+                input.value = input.value.replace(/[^\d.,]/g, '')
             }
-        });
+        })
+
+        inputsMenosPopupYSuperficieCubierta.forEach(input => {
+            if (isElementVisible(input)) {
+                anyVisibleInputs = true;
+                if (input.value === '') {
+                    console.log("prueba")
+                    allFilled = false;
+                }}
+        })
+
+        if (!anyVisibleInputs) {
+            allFilled = false;
+        }
+
+        const A2Checkbox = document.getElementById('a2')
+
+        if (A2Checkbox.checked) {
+            checkboxChecked = true;
+        }
     
-        botonCalculo.disabled = !allFilled;
-        botonCalcularEImprimir.disabled = !allFilled;
+        
+        const enableButtons = allFilled || checkboxChecked;
+        botonCalculo.disabled = !enableButtons;
+        botonCalcularEImprimir.disabled = !enableButtons;
     }
     
     inputsMenosPopup.forEach(input => {
@@ -411,6 +516,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divAmpliacionM2.style.display = 'none'
             const inputSuperficieAmpliacion = document.getElementById('superficieAmpliacion')
             inputSuperficieAmpliacion.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -421,6 +527,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divConformeObraM2.style.display = 'none'
             const inputSuperficieConformeObra = document.getElementById('superficieConformeObra')
             inputSuperficieConformeObra.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -431,6 +538,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divDemolicionM2.style.display = 'none'
             const inputSuperficieDemolicion = document.getElementById('superficieDemolicion')
             inputSuperficieDemolicion.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -441,6 +549,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divObraNuevaM2.style.display = 'none'
             const inputSuperficieObraNueva = document.getElementById('superficieObraNueva')
             inputSuperficieObraNueva.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -471,6 +580,11 @@ document.addEventListener('DOMContentLoaded', function(){
             viviendaSocialRadio.checked = false
             divViviendaParticular.style.display = 'none'
             divViviendaSocial.style.display = 'none'
+            const inputSuperficieViviendaSocial = document.getElementById('superficieViviendaSocial')
+            const inputSuperficieViviendaParticular = document.getElementById('superficieViviendaParticular')
+            inputSuperficieViviendaParticular.value = ''
+            inputSuperficieViviendaSocial.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -484,6 +598,11 @@ document.addEventListener('DOMContentLoaded', function(){
             usoComercialDepositoEtcRadio.checked = false
             divUsoComercialBancosHoteles.style.display = 'none'
             divUsoComercialDepositoEtc.style.display = 'none'
+            const inputSuperficieDepositoEtc = document.getElementById('superficieDepositoEtc')
+            const inputsuperficieBancosHoteles = document.getElementById('superficieBancosHoteles')
+            inputSuperficieDepositoEtc.value = ''
+            inputsuperficieBancosHoteles.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -499,6 +618,13 @@ document.addEventListener('DOMContentLoaded', function(){
             divConstruccionIndustrialFabricas.style.display = 'none'
             divConstruccionIndustrialGalpones.style.display = 'none'
             divConstruccionIndustrialTinglados.style.display = 'none'
+            const inputSuperficieFabricas = document.getElementById('superficieFabricas')
+            const inputSuperficieGalpones = document.getElementById('superficieGalpones')
+            const inputSuperficieTinglados = document.getElementById('superficieTinglados')
+            inputSuperficieFabricas.value = ''
+            inputSuperficieGalpones.value = ''
+            inputSuperficieTinglados.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -512,6 +638,11 @@ document.addEventListener('DOMContentLoaded', function(){
             construccionesVariasClubesEtc.checked = false
             divConstruccionesVariasCineEtc.style.display = 'none'
             divConstruccionesVariasClubesEtc.style.display = 'none'
+            const inputSuperficieCineEtc = document.getElementById('superficieCineEtc')
+            const inputSuperficieClubesEtc = document.getElementById('superficieClubesEtc')
+            inputSuperficieCineEtc.value = ''
+            inputSuperficieClubesEtc.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -521,6 +652,9 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divCantTanques.style.display = 'none'
+            const inputCantTanques = document.getElementById('cantTanques')
+            inputCantTanques.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -530,6 +664,9 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         else {
             divToldo.style.display = 'none'
+            const inputSuperficieToldo = document.getElementById('superficieToldo')
+            inputSuperficieToldo.value = ''
+            validateAndToggleButton()
         }
     })
 
@@ -559,24 +696,28 @@ document.addEventListener('DOMContentLoaded', function(){
         if (viviendaParticularRadio.checked) {
             divViviendaParticular.style.display = 'flex'
             divViviendaSocial.style.display = 'none'
+            validateAndToggleButton()
         }
     })
     viviendaSocialRadio.addEventListener('click', function() {
         if (viviendaSocialRadio.checked) {
             divViviendaParticular.style.display = 'none'
             divViviendaSocial.style.display = 'flex'
+            validateAndToggleButton()
         }
     })
     usoComercialDepositoEtcRadio.addEventListener('click', function() {
         if (usoComercialDepositoEtcRadio.checked) {
             divUsoComercialDepositoEtc.style.display = 'flex'
             divUsoComercialBancosHoteles.style.display = 'none'
+            validateAndToggleButton()
         }
     })
     usoComercialBancosHotelesRadio.addEventListener('click', function() {
         if (usoComercialBancosHotelesRadio.checked) {
             divUsoComercialDepositoEtc.style.display = 'none'
             divUsoComercialBancosHoteles.style.display = 'flex'
+            validateAndToggleButton()
         }
     })
     construccionIndustrialFabricasRadio.addEventListener('click', function() {
@@ -584,6 +725,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divConstruccionIndustrialFabricas.style.display = 'flex'
             divConstruccionIndustrialGalpones.style.display = 'none'
             divConstruccionIndustrialTinglados.style.display = 'none'
+            validateAndToggleButton()
         }
     })
     construccionIndustrialGalponesRadio.addEventListener('click', function() {
@@ -591,6 +733,7 @@ document.addEventListener('DOMContentLoaded', function(){
             divConstruccionIndustrialFabricas.style.display = 'none'
             divConstruccionIndustrialGalpones.style.display = 'flex'
             divConstruccionIndustrialTinglados.style.display = 'none'
+            validateAndToggleButton()
         }
     })
     construccionIndustrialTingladosRadio.addEventListener('click', function() {
@@ -598,12 +741,14 @@ document.addEventListener('DOMContentLoaded', function(){
             divConstruccionIndustrialFabricas.style.display = 'none'
             divConstruccionIndustrialGalpones.style.display = 'none'
             divConstruccionIndustrialTinglados.style.display = 'flex'
+            validateAndToggleButton()
         }
     })
     construccionesVariasCineEtcRadio.addEventListener('click', function() {
         if (construccionesVariasCineEtcRadio.checked) {
             divConstruccionesVariasCineEtc.style.display = 'flex'
             divConstruccionesVariasClubesEtc.style.display = 'none'
+            validateAndToggleButton()
         }
     })
 
@@ -611,12 +756,8 @@ document.addEventListener('DOMContentLoaded', function(){
         if (construccionesVariasClubesEtc.checked) {
             divConstruccionesVariasCineEtc.style.display = 'none'
             divConstruccionesVariasClubesEtc.style.display = 'flex'
+            validateAndToggleButton()
         }
     })
-
-
-
-
-
     resetCheckboxRadioInput();
 })

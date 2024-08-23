@@ -1,0 +1,32 @@
+.sidebar {
+    margin: 0;
+    padding: 10px 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    display: flex;
+    position: fixed;
+    width: 150px;
+    height: 100%;
+    background: #007FC6;
+}
+
+.sidebar ul li {
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(225, 225, 225, 0.05);
+}
+
+.sidebar ul li:hover {
+    background: #509ac5;
+}
+
+.sidebar ul li {
+    color: #bdb8d7;
+    display: block;
+}
+
+.svg {
+    height: 40px;
+    width: 40px;
+}
