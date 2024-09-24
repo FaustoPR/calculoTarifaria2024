@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-header, footer {
+footer {
     background-color: #007FC6;
     height: 150px;
     padding: 30px 10px;
@@ -9,7 +9,7 @@ header, footer {
     text-align: center;
 }
 
-header, body, footer {
+body, footer {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
@@ -17,18 +17,18 @@ header, body, footer {
     color: white;
 }
 
-header img, footer img {
+footer img {
     border-radius: 10px;
     width: auto;
     height: 100%;
     object-fit: contain;
 }
 
-header h1 {
+/* header h1 {
     color: white;
     border: black;
     margin-left: 20px;
-}
+} */
 
 
 main {
@@ -77,12 +77,11 @@ main {
 }
 
 
-
 #imagen_fondo {
     opacity: 0.5;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 25%;
     width: 40%;
     height: auto;
     z-index: -1;
@@ -114,6 +113,10 @@ main {
 
 .subrayado {
     text-decoration-line: underline;
+}
+
+.section_principal {
+    margin-left: 7vw;
 }
 
 #div_indicarConstruccion {
